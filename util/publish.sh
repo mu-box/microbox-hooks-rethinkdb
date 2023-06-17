@@ -17,15 +17,15 @@ cat $project_dir/.build/rethinkdb-${stability}.tgz | md5 > $project_dir/.build/r
 echo "Uploading builds to s3..."
 aws s3 sync \
   $project_dir/.build/ \
-  s3://tools.nanobox.io/hooks \
+  s3://tools.microbox.cloud/hooks \
   --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers \
   --region us-east-1
 
-echo "Creating invalidation for cloudfront"
-aws  configure  set preview.cloudfront true
-aws cloudfront create-invalidation \
-  --distribution-id E1O0D0A2DTYRY8 \
-  --paths /hooks/rethinkdb-${stability}.tgz /hooks/rethinkdb-${stability}.md5
+# echo "Creating invalidation for cloudfront"
+# aws  configure  set preview.cloudfront true
+# aws cloudfront create-invalidation \
+#   --distribution-id E1O0D0A2DTYRY8 \
+#   --paths /hooks/rethinkdb-${stability}.tgz /hooks/rethinkdb-${stability}.md5
 
 echo "Cleaning..."
 rm -rf $project_dir/.build

@@ -41,17 +41,17 @@ Vagrant.configure(2) do |config|
   # pull the build image to run tests in
   config.vm.provision "shell", inline: <<-SCRIPT
     echo "Pulling the build image"
-    docker pull nanobox/rethinkdb:2.3
+    docker pull mubox/rethinkdb:2.3
   SCRIPT
 
   # create an adhoc network
   config.vm.provision "shell", inline: <<-SCRIPT
-    if [[ ! `docker network ls | grep nanobox` ]]; then
+    if [[ ! `docker network ls | grep microbox` ]]; then
       docker network create \
         --driver=bridge \
         --subnet=192.168.0.0/16 \
         --opt="com.docker.network.driver.mtu=1450" \
-        --opt="com.docker.network.bridge.name=redd0" nanobox
+        --opt="com.docker.network.bridge.name=redd0" microbox
     fi
   SCRIPT
 end

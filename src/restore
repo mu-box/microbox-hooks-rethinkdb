@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # hookit is installed as a bundled app, so we need bundler to load it for us
-$:.unshift  '/opt/gonano/hookit/vendor/bundle'
+$:.unshift  '/opt/gomicro/hookit/vendor/bundle'
 require 'bundler/setup'
 
 # load hookit/setup to bootstrap hookit and import the dsl
@@ -10,8 +10,8 @@ require 'hookit/setup'
 # pipe the backup into rethinkdb client to restore from backup
 directory '/var/tmp/rethinkdb-restore' do
   recursive true
-  owner "gonano"
-  group "gonano"
+  owner "gomicro"
+  group "gomicro"
 end
 
 execute "retrieve backup from server" do
@@ -20,7 +20,7 @@ end
 
 execute "restore from backup" do
   command "/data/bin/rethinkdb restore --force --hard-durability --temp-dir /var/tmp/rethinkdb-restore /var/tmp/rethinkdb.tar.gz"
-  user "gonano"
+  user "gomicro"
 end
 
 file "/var/tmp/rethinkdb.tar.gz" do
